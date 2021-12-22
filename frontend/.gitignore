@@ -1,0 +1,19 @@
+# misc
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+# API
+.env
+
+# Depdencies
+node_modules
+bower_components
+
+# Editors
+*.sublime*
+
+psd
+thumb
+sketch
