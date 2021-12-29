@@ -3,9 +3,11 @@ import sequelizeConnection from "../index"
 
 interface IUserAttributes {
   id: number
-  username: string
+  firstName: string
+  lastName: string
   email: string
   password: string
+  isAdmin: boolean
 }
 
 interface IUserCreationAttributes extends Optional<IUserAttributes, "id"> {}
@@ -15,9 +17,11 @@ class User
   implements IUserAttributes
 {
   id!: number
-  username!: string
+  firstName!: string
+  lastName!: string
   email!: string
   password!: string
+  isAdmin!: boolean
 
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
@@ -33,7 +37,11 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -43,6 +51,10 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
   },
