@@ -15,7 +15,7 @@ app.use(cors())
 
 app.use(routes)
 
-app.get("api/v1/health", (req: Request, res: Response, next: NextFunction) => {
+app.get("/api/v1/health", (req: Request, res: Response, next: NextFunction) => {
   try {
     res.send({ live: true }).status(200)
   } catch (err) {

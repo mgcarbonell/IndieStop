@@ -1,4 +1,5 @@
-import { config } from "./index"
+import config from "./index"
+
 const username = config.db.username
 const password = config.db.password
 const database = config.db.database

@@ -1,4 +1,8 @@
-export const config = {
+import dotenv from "dotenv"
+
+dotenv.config()
+
+const config = {
   environment: process.env.NODE_ENV || "development",
   port: process.env.PORT || 4000,
   db: {
@@ -9,3 +13,5 @@ export const config = {
     dialect: process.env.DB_DIAL,
   },
 }
+
+export default config
