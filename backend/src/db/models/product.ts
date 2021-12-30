@@ -1,5 +1,4 @@
-import { Model, Optional, DataTypes } from "sequelize"
-import sequelizeConnection from "../index"
+import { Model, Optional } from "sequelize"
 
 interface IProductAttributes {
   id: number
@@ -12,50 +11,55 @@ interface IProductAttributes {
 interface IProductCreationAttributes
   extends Optional<IProductAttributes, "id"> {}
 
-class Product
-  extends Model<IProductAttributes, IProductCreationAttributes>
-  implements IProductAttributes
-{
-  public id!: number
-  public name!: string
-  public quantity!: number
-  public description!: string
-  public price!: number
-
-  public readonly createdAt!: Date
-  public readonly updatedAt!: Date
-}
-
-Product.init(
+module.exports = (sequelize: any, DataTypes: any) => {
+  class Product
+    extends Model<IProductAttributes, IProductCreationAttributes>
+    implements IProductAttributes
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    quantity: {
-      type: DataTypes.NUMBER,
-      allowNull: false,
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    price: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-  },
-  {
-    sequelize: sequelizeConnection,
-    tableName: "Products",
+    id!: number
+    name!: string
+    quantity!: number
+    description!: string
+    price!: number
+    public readonly createdAt!: Date
+    public readonly updatedAt!: Date
+
+    static associate(models: any) {
+      /* associations go here */
+      Product.hasMany(models.CartItem, {
+        foreignKey: "prodId",
+      })
+    }
   }
-)
-
-export default Product
+  Product.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Product",
+    }
+  )
+  return Product
+}
