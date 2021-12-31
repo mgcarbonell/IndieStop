@@ -1,6 +1,6 @@
 import dotenv from "dotenv"
 import { app } from "./app"
-import "reflect metadata"
+import "reflect-metadata"
 import { Connection, createConnection } from "typeorm"
 import ORMConfig from "../ormconfig"
 import logger from "./utils/Logger"
@@ -17,6 +17,8 @@ const connectToORM = async () => {
     let connection: Connection
     connection = await createConnection(ORMConfig)
     logger.info(`Connected to Database`)
+    await connection.runMigrations()
+    await logger.info(`Database Migrations ran`)
   } catch (err: any) {
     logger.error(err)
   }

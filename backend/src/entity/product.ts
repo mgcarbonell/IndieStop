@@ -3,9 +3,9 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  JoinColumn,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm"
 import { CartItem } from "./cartitem"
 
@@ -14,7 +14,7 @@ export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column("varchar", { nullable: false, length: 255 })
+  @Column("varchar", { nullable: false, length: 255, unique: true })
   title!: string
 
   @Column("numeric", { nullable: false, precision: 10, scale: 2 })
@@ -24,10 +24,16 @@ export class Product extends BaseEntity {
   description!: string
 
   @Column("text", { nullable: false })
-  imgUrl!: string
+  img_url!: string
 
   @Column("smallint", { nullable: false })
   stock!: number
+
+  @CreateDateColumn({ name: "created_at" })
+  created_at!: Date
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updated_at!: Date
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.product_id)
   cartItems!: CartItem[]
