@@ -1,5 +1,0 @@
-We're going to need:
-
-products
-cart
-checkout
