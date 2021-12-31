@@ -17,14 +17,14 @@ export class CartItem extends BaseEntity {
   @Column("int", { nullable: false })
   quantity: number
 
-  @ManyToOne(() => Cart, (cart) => cart.cartItems, {
+  @ManyToOne(() => Cart, (cart) => cart.cartItem, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   })
   @JoinColumn({ name: "cart_id" })
   cart_id: Cart
 
-  @ManyToOne(() => Product, (prod) => prod.cartItems, {
+  @ManyToOne(() => Product, (prod) => prod.cartItem, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   })

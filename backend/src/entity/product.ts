@@ -36,5 +36,5 @@ export class Product extends BaseEntity {
   updated_at!: Date
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.product_id)
-  cartItems!: CartItem[]
+  cartItem: CartItem[]
 }
