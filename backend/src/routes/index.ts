@@ -1,8 +1,8 @@
 import express from "express"
+import apiRouter from "./api"
 
-const routes = express.Router()
-// const apiRoutes = require("./api")
+const router = express.Router()
 
-// routes.use("/api", apiRoutes)
+router.use("/api/v1", apiRouter)
 
-export { routes }
+export default router

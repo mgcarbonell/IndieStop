@@ -1,6 +1,6 @@
 import { Product } from "../entity/product"
 import express from "express"
-import logger from "src/utils/Logger"
+import logger from "../utils/Logger"
 
 const getAllProducts = async (req: express.Request, res: express.Response) => {
   try {
@@ -12,10 +12,7 @@ const getAllProducts = async (req: express.Request, res: express.Response) => {
   }
 }
 
-const getSingleProduct = async (
-  req: express.Request,
-  res: express.Response
-) => {
+const getProductById = async (req: express.Request, res: express.Response) => {
   try {
     const productId: number = parseInt(req.params.id, 10)
     await Product.findOne({ id: productId }).then((product) => {
@@ -33,5 +30,5 @@ const getSingleProduct = async (
 
 export default module.exports = {
   getAllProducts,
-  getSingleProduct,
+  getProductById,
 }

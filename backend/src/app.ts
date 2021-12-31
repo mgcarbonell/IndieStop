@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 import express, { Application, Request, Response, NextFunction } from "express"
 import cors from "cors"
 import helmet from "helmet"
-import { routes } from "./routes"
+import router from "./routes"
 
 dotenv.config()
 
@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(helmet({ contentSecurityPolicy: false }))
 app.use(cors())
 
-app.use(routes)
+app.use(router)
 
 app.get("/api/v1/health", (req: Request, res: Response, next: NextFunction) => {
   try {
