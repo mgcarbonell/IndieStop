@@ -1,18 +1,24 @@
 import dotenv from "dotenv"
 import { app } from "./app"
+import "reflect metadata"
+import { Connection, createConnection } from "typeorm"
+import ORMConfig from "../ormconfig"
 import logger from "./utils/Logger"
 dotenv.config()
 
 const PORT: number = parseInt(process.env.PORT as string, 10) || 4000
 
-db.sequelize
-  .sync()
-  .then(() => {
-    app.listen(PORT, () => {
-      logger.info(`Server started on port ${PORT}`)
-    })
-    logger.info(`Database connected`)
-  })
-  .catch((err: Error) => {
+const server = app.listen(PORT, () => {
+  logger.info(`Server listening on port ${PORT}`)
+})
+
+const connectToORM = async () => {
+  try {
+    let connection: Connection
+    connection = await createConnection(ORMConfig)
+    logger.info(`Connected to Database`)
+  } catch (err: any) {
     logger.error(err)
-  })
+  }
+}
+connectToORM()
