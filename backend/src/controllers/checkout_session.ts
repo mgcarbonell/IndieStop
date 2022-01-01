@@ -36,7 +36,6 @@ const stripe = new Stripe(stripeKey.secret, {
   apiVersion: "2020-08-27",
 })
 
-const postStripe = async (req: express.Request, res: express.Response) => {
-  const headers: HeadersInit = {
-    "Authorization": `Bearer ${stripeKey.secret}`,
-
+// const postStripe = async (req: express.Request, res: express.Response) => {
+//   const headers: HeadersInit = {
+//     "Authorization": `Bearer ${stripeKey.secret}`,
