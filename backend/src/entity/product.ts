@@ -8,6 +8,9 @@ import {
   UpdateDateColumn,
 } from "typeorm"
 import { CartItem } from "./cartitem"
+/**
+ * price is in cents
+ */
 
 @Entity()
 export class Product extends BaseEntity {
