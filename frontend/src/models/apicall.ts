@@ -38,6 +38,14 @@ class ApiCall implements IServerApi {
     const json = await response.json()
     return json
   }
+  static async updateQty(url: string, call: string, id: any, qty: number) {
+    const response = await fetch(`${url}/${call}/:${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ id, qty }),
+    })
+    const json = await response.json()
+    return json
+  }
 }
 
 export default ApiCall
