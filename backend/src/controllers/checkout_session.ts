@@ -36,6 +36,25 @@ const stripe = new Stripe(stripeKey.secret, {
   apiVersion: "2020-08-27",
 })
 
-// const postStripe = async (req: express.Request, res: express.Response) => {
-//   const headers: HeadersInit = {
-//     "Authorization": `Bearer ${stripeKey.secret}`,
+const postStripe = async (req: express.Request, res: express.Response) => {
+  const clientUrl = process.env.CLIENT_URL as string
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: [
+        req.body.items.map((item: any) => ({
+          price: item.price,
+          quantity: item.quantity,
+        })),
+      ],
+      success_url: `${clientUrl}/success}`,
+      cancel_url: `${clientUrl}/cancel`,
+    })
+    res.json({ sessionId: session.id })
+  } catch (err: any) {
+    res.status(500).json({ error: err.message })
+    logger.error(err)
+  }
+}

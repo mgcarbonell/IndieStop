@@ -1,8 +1,6 @@
 import ApiCall from "./apicall"
 
-const GetProducts = new ApiCall(
+const StripePayment = new ApiCall(
   process.env.REACT_APP_SERVER_URL as string,
-  "product"
+  "stripe"
 )
-
-export default GetProducts

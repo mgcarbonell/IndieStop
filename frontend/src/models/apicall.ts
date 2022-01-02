@@ -22,25 +22,50 @@ class ApiCall implements IServerApi {
   static async post(url: string, call: string, data: any) {
     const response = await fetch(`${url}/${call}`, {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(data),
     })
     const json = await response.json()
     return json
   }
+
+  static async postToStripe(
+    url: string,
+    call: string,
+    amount: any,
+    token: any
+  ) {
+    const response = await fetch(`${url}/${call}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount, token }),
+    })
+    const json = await response.json()
+    return json
+  }
+
   static async delete(url: string, call: string, id: any) {
     const response = await fetch(`${url}/${call}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ id }),
     })
     const json = await response.json()
     return json
   }
+
   static async updateQty(url: string, call: string, id: any, qty: number) {
     const response = await fetch(`${url}/${call}/:${id}`, {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ id, qty }),
     })
     const json = await response.json()
