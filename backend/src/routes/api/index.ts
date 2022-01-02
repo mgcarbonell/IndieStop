@@ -8,6 +8,6 @@ const router = express.Router()
 
 router.use("/cart", cartRouter)
 router.use("/product", productRouter)
-router.use("/payment", stripeRouter)
+router.use("/stripe", stripeRouter)
 
 export default router
