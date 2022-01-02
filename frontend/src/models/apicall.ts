@@ -1,4 +1,4 @@
-import IServerApi from "../../interfaces/serverapi.interface"
+import IServerApi from "../interfaces/serverapi.interface"
 
 class ApiCall implements IServerApi {
   public url: string
