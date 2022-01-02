@@ -11,11 +11,7 @@
 import express from "express"
 import logger from "../utils/Logger"
 import Stripe from "stripe"
-
-interface IStripeKey {
-  secret: string
-  publishable: string
-}
+import { IStripeKey } from "./interfaces"
 
 class ApiKey implements IStripeKey {
   public secret: string
@@ -36,25 +32,28 @@ const stripe = new Stripe(stripeKey.secret, {
   apiVersion: "2020-08-27",
 })
 
-const postStripe = async (req: express.Request, res: express.Response) => {
+const charge = (token: string, amount: number) => {
+  return stripe.charges.create({
+    amount: amount,
+    currency: "usd",
+    source: token,
+    description: "Test Charge",
+  })
+}
+
+const postToStripe = async (req: express.Request, res: express.Response) => {
   const clientUrl = process.env.CLIENT_URL as string
 
   try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: [
-        req.body.items.map((item: any) => ({
-          price: item.price,
-          quantity: item.quantity,
-        })),
-      ],
-      success_url: `${clientUrl}/success}`,
-      cancel_url: `${clientUrl}/cancel`,
-    })
-    res.json({ sessionId: session.id })
+    let data = await charge(req.body.token.id, req.body.amount)
+    logger.info(data)
+    res.send("success").status(200)
   } catch (err: any) {
-    res.status(500).json({ error: err.message })
     logger.error(err)
+    res.status(500).json({ error: err.message })
   }
+}
+
+export default module.exports = {
+  postToStripe,
 }

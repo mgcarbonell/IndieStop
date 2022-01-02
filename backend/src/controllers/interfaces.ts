@@ -3,3 +3,8 @@ export interface ICartItems {
   title: string
   cartItem: { quantity: number }
 }
+
+export interface IStripeKey {
+  secret: string
+  publishable: string
+}
