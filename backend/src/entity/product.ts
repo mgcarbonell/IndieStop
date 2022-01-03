@@ -20,7 +20,7 @@ export class Product extends BaseEntity {
   @Column("varchar", { nullable: false, length: 255, unique: true })
   title!: string
 
-  @Column("numeric", { nullable: false, precision: 10, scale: 2 })
+  @Column("integer", { nullable: false })
   price!: number
 
   @Column("text", { nullable: false })

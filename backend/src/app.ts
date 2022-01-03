@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(helmet({ contentSecurityPolicy: false }))
 app.use(
   cors({
-    origin: process.env.CLIENT_URL as string,
+    origin: "*" || (process.env.CLIENT_URL as string),
   })
 )
 
