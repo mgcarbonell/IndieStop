@@ -1,8 +1,12 @@
 import ApiCall from "./apicall"
+// import IServerApi from "../interfaces/serverapi.interface"
 
-const GetProducts = new ApiCall(
-  process.env.REACT_APP_SERVER_URL as string,
-  "product"
-)
+class ProductsCall extends ApiCall {
+  constructor() {
+    super(process.env.REACT_APP_SERVER_URL as string, "products")
+  }
+}
 
-export default GetProducts
+const Products: ProductsCall = new ProductsCall()
+
+export default Products

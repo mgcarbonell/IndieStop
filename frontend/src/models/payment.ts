@@ -1,8 +1,10 @@
 import ApiCall from "./apicall"
 
-const StripePayment = new ApiCall(
-  process.env.REACT_APP_SERVER_URL as string,
-  "stripe"
-)
+class StripeCall extends ApiCall {
+  constructor() {
+    super(process.env.REACT_APP_SERVER_URL as string, "stripe")
+  }
+}
+const StripePayment: StripeCall = new StripeCall()
 
 export default StripePayment
