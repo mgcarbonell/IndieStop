@@ -13,4 +13,16 @@ export default class Products {
     const data = await response.json()
     return data
   }
+
+  static updateQty = async (id: string, qty: number): Promise<any> => {
+    const response = await fetch(`${Products.apiUrl}/product/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ qty }),
+    })
+    const data = await response.json()
+    return data
+  }
 }
