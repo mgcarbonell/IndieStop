@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react"
-import { AppBar, Box, Toolbar, IconButton, Typography } from "@mui/material"
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
-// Add a logo or something
+import React from "react"
+import ReactDOM from "react-dom"
+import { BrowserRouter as Router } from "react-router-dom"
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
+import App from "./App"
 
-const Navbar: React.FC = () => {
-  return (
-    <Box>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">IndieStop</Typography>
-          <IconButton>
-            <ShoppingCartIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  )
-}
+const stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY! as string)
 
-export default Navbar
+ReactDOM.render(
+  <React.StrictMode>
+    <Elements stripe={stripe}>
+      <Router>
+        <App />
+      </Router>
+    </Elements>
+  </React.StrictMode>,
+  document.getElementById("root")
+)
