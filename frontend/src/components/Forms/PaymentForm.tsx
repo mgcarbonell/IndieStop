@@ -31,6 +31,7 @@ const CheckoutForm: React.FC<ICheckoutFormProps> = (
       Payment.post(stripe).then((res) => {
         if (res.ok) {
           setSuccess(true)
+          localStorage.removeItem("items")
         }
       })
     } catch (err: any) {

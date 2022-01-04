@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { Card, CardContent, CardMedia, Fab, Typography } from "@mui/material"
 import { AddShoppingCart } from "@mui/icons-material"
-import { Button } from "@mui/material"
-import IProductCardProps from "../../interfaces/productProp.interface"
-import { ShoppingCartContext } from "../../context/ShoppingCartContext"
+import IProductCardProps from "../../../interfaces/productProp.interface"
+import { ShoppingCartContext } from "../../../context/ShoppingCartContext"
 // import Cart from "../../models/cart"
 
 const ProductCard: React.FC<IProductCardProps> = ({
@@ -19,7 +18,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
   //   e.preventDefault()
   //   Cart.post(prodId)
   // }
-  const { quantity, items, total, setItems, setQuantity, setTotal } =
+  const { items, total, setItems, setQuantity, setTotal } =
     useContext(ShoppingCartContext)
 
   let cart = localStorage.getItem("items") || "[{}]"
@@ -28,10 +27,17 @@ const ProductCard: React.FC<IProductCardProps> = ({
   const addToCart = (e: React.FormEvent) => {
     e.preventDefault()
     setItems([...items, { description, title, price, img_url, id }])
-    setTotal(total + price)
-    setQuantity(quantity + 1)
+    setTotal(total + price * 100)
+    setQuantity(cart.length - 1)
     localStorage.setItem("items", JSON.stringify(items))
   }
+
+  // useEffect(() => {
+  //   setQuantity(cart.length - 1)
+  //   return () => {
+  //     setQuantity(0)
+  //   }
+  // }, [items, cart, setQuantity])
 
   return (
     <div>
@@ -49,15 +55,8 @@ const ProductCard: React.FC<IProductCardProps> = ({
           <Typography variant="h6" component="h2">
             ${price}
           </Typography>
-          <Fab color="primary" aria-label="add to cart">
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddShoppingCart />}
-              onClick={addToCart}
-            >
-              Add to Cart
-            </Button>
+          <Fab color="primary" aria-label="add to cart" onClick={addToCart}>
+            <AddShoppingCart />
           </Fab>
         </CardContent>
       </Card>

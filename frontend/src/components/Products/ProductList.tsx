@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Products from "../../models/products"
-import ProductCard from "../ProductCard/ProductCard"
+import ProductCard from "./ProductCard/ProductCard"
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState([] as any[])

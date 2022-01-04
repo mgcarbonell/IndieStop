@@ -1,10 +1,10 @@
 import React from "react"
-import Checkoutform from "../Forms/PaymentForm"
+import CheckoutForm from "../Forms/PaymentForm"
 
 const Checkout = () => {
   return (
     <div>
-      <Checkoutform />
+      <CheckoutForm />
     </div>
   )
 }
