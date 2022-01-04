@@ -33,10 +33,6 @@ const ProductCard: React.FC<IProductCardProps> = ({
     localStorage.setItem("items", JSON.stringify(items))
   }
 
-  useEffect(() => {
-    setQuantity(cart.length - 1)
-  }, [items, cart, setQuantity])
-
   return (
     <div>
       <Card>
