@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { Card, CardContent, CardMedia, Typography } from "@mui/material"
+import React, { useContext } from "react"
+import { Card, CardContent, CardMedia, Fab, Typography } from "@mui/material"
 import { AddShoppingCart } from "@mui/icons-material"
 import { Button } from "@mui/material"
 import IProductCardProps from "../../interfaces/productProp.interface"
-import Cart from "../../models/cart"
-// { description, title, img_url, price, stock }
+import { ShoppingCartContext } from "../../context/ShoppingCartContext"
+// import Cart from "../../models/cart"
 
 const ProductCard: React.FC<IProductCardProps> = ({
   title,
@@ -14,11 +14,20 @@ const ProductCard: React.FC<IProductCardProps> = ({
   id,
 }) => {
   const prodId = { id }
+
+  // const addToCart = (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   Cart.post(prodId)
+  // }
+  const { quantity, items, setItems, setQuantity } =
+    useContext(ShoppingCartContext)
+
   const addToCart = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(prodId)
-    Cart.post(prodId)
+    setItems([...items, { description, title, price, img_url, id }])
+    setQuantity(quantity + 1)
   }
+
   return (
     <div>
       <Card>
@@ -35,14 +44,16 @@ const ProductCard: React.FC<IProductCardProps> = ({
           <Typography variant="h6" component="h2">
             ${price}
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddShoppingCart />}
-            onClick={addToCart}
-          >
-            Add to Cart
-          </Button>
+          <Fab color="primary" aria-label="add to cart">
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddShoppingCart />}
+              onClick={addToCart}
+            >
+              Add to Cart
+            </Button>
+          </Fab>
         </CardContent>
       </Card>
     </div>

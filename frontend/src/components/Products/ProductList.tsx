@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react"
 import Products from "../../models/products"
 import ProductCard from "../ProductCard/ProductCard"
 
-const ProductList: React.FC = (props) => {
+const ProductList: React.FC = () => {
   const [products, setProducts] = useState([] as any[])
-  const [prices, setPrices] = useState([] as any[])
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   useEffect(() => {
     Products.all()
       .then((data) => {
         setProducts(data.products)
-        setPrices(data.products.price)
       })
       .then(() => setIsLoaded(true))
   }, [])

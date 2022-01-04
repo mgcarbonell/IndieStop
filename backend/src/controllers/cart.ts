@@ -1,12 +1,11 @@
 import { Cart } from "../entity/cart"
 import { CartItem } from "../entity/cartitem"
-import { ICartItems } from "./interfaces"
 import { Product } from "../entity/product"
 import express from "express"
 import logger from "../utils/Logger"
 
 const getCart = async (req: express.Request, res: express.Response) => {
-  const product: ICartItems[] = []
+  const product: any[] = []
   try {
     await CartItem.find({ relations: ["product_id"] }).then((citem) => {
       citem.forEach((item) => {
@@ -15,7 +14,8 @@ const getCart = async (req: express.Request, res: express.Response) => {
           title: item.product_id.title,
           cartItem: { quantity: item.quantity },
         })
-        res.json({ products: product }).status(200)
+        logger.info(product)
+        res.json({ product: product }).status(200)
       })
     })
   } catch (err: any) {
