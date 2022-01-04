@@ -4,12 +4,15 @@ import ProductCard from "../ProductCard/ProductCard"
 
 const ProductList: React.FC = (props) => {
   const [products, setProducts] = useState([] as any[])
-  const [prices, setPrices] = useState([] as number[])
+  const [prices, setPrices] = useState([] as any[])
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   useEffect(() => {
     Products.all()
-      .then((data) => setProducts(data.products))
+      .then((data) => {
+        setProducts(data.products)
+        setPrices(data.products.price)
+      })
       .then(() => setIsLoaded(true))
   }, [])
   return (
@@ -18,11 +21,11 @@ const ProductList: React.FC = (props) => {
         products.map((product: any, index: number) => (
           <ProductCard
             key={index}
+            id={product.id}
             title={product.title}
             description={product.description}
             img_url={product.img_url}
             price={product.price / 100}
-            subtotal={prices[index]}
           />
         ))
       ) : (

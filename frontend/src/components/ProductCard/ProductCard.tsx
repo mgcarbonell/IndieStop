@@ -4,19 +4,25 @@ import { AddShoppingCart } from "@mui/icons-material"
 import { Button } from "@mui/material"
 import IProductCardProps from "../../interfaces/productProp.interface"
 // { description, title, img_url, price, stock }
+
 const ProductCard: React.FC<IProductCardProps> = ({
   title,
   description,
   img_url,
   price,
-  subtotal,
+  id,
 }) => {
-  // for stripe //
-  const unit_amount = { subtotal }
+  const prodId = { id }
+  const addToCart = (e: React.FormEvent) => {
+    e.preventDefault()
+    console.log("add to cart " + prodId.id)
+  }
   return (
     <div>
       <Card>
-        <CardMedia component="img" image={img_url} alt={`A ${title} onesie`} />
+        <CardMedia>
+          <img src={img_url} alt={`A ${title} onesie`} />
+        </CardMedia>
         <CardContent>
           <Typography variant="h5" component="h2">
             {title}
@@ -31,6 +37,7 @@ const ProductCard: React.FC<IProductCardProps> = ({
             variant="contained"
             color="primary"
             startIcon={<AddShoppingCart />}
+            onClick={addToCart}
           >
             Add to Cart
           </Button>
