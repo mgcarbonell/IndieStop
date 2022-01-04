@@ -1,13 +1,3 @@
-/* we need price_data {} and quantity: item.quantity
-  price_data: {
-    "currency": "usd",
-    product_data: {
-      name: 
-    }
-    unit_amount: PRICE NEEDS TO BE IN CENTS! CENTS!
-  }
-
-*/
 import express from "express"
 import logger from "../utils/Logger"
 import Stripe from "stripe"
@@ -45,9 +35,9 @@ const postToStripe = async (req: express.Request, res: express.Response) => {
   const clientUrl = process.env.CLIENT_URL as string
 
   try {
-    let data = await charge(req.body.token.id, req.body.amount)
+    let data = await charge(req.body.token.name, req.body.token.amount)
     logger.info(data)
-    res.send("success").status(200)
+    res.send(data).status(200)
   } catch (err: any) {
     logger.error(err)
     res.status(500).json({ error: err.message })

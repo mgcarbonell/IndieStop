@@ -4,6 +4,13 @@ import { Product } from "../entity/product"
 import express from "express"
 import logger from "../utils/Logger"
 
+/**
+ * I think I can find a way to fix the getCart function
+ * I would just need to make sure to create a cart instance
+ * and then push the cart item into the cart instance or
+ * create a user, tie the user to the cart, and cart_item
+ */
+
 const getCart = async (req: express.Request, res: express.Response) => {
   const product: any[] = []
   try {
@@ -11,8 +18,8 @@ const getCart = async (req: express.Request, res: express.Response) => {
       citem.forEach((item) => {
         product.push({
           id: item.id,
-          title: item.product_id.title,
-          cartItem: { quantity: item.quantity },
+          // title: item.product_id.title,
+          // cartItem: { quantity: item.quantity },
         })
         logger.info(product)
         res.json({ product: product }).status(200)

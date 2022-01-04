@@ -1,5 +1,3 @@
-// import ApiCall from "./apicall"
-
 export default class Payment {
   public static apiUrl = process.env.REACT_APP_SERVER_URL as string
   static post = async (data: any): Promise<any> => {
@@ -14,6 +12,7 @@ export default class Payment {
     return json
   }
 }
+// import ApiCall from "./apicall"
 
 // class StripeCall extends ApiCall {
 //   constructor() {

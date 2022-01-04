@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Card, CardContent, CardMedia, Fab, Typography } from "@mui/material"
 import { AddShoppingCart } from "@mui/icons-material"
 import { Button } from "@mui/material"
@@ -13,20 +13,29 @@ const ProductCard: React.FC<IProductCardProps> = ({
   price,
   id,
 }) => {
-  const prodId = { id }
+  // const prodId = { id }
 
   // const addToCart = (e: React.FormEvent) => {
   //   e.preventDefault()
   //   Cart.post(prodId)
   // }
-  const { quantity, items, setItems, setQuantity } =
+  const { quantity, items, total, setItems, setQuantity, setTotal } =
     useContext(ShoppingCartContext)
+
+  let cart = localStorage.getItem("items") || "[{}]"
+  cart = JSON.parse(cart)
 
   const addToCart = (e: React.FormEvent) => {
     e.preventDefault()
     setItems([...items, { description, title, price, img_url, id }])
+    setTotal(total + price)
     setQuantity(quantity + 1)
+    localStorage.setItem("items", JSON.stringify(items))
   }
+
+  useEffect(() => {
+    setQuantity(cart.length - 1)
+  }, [items, cart, setQuantity])
 
   return (
     <div>

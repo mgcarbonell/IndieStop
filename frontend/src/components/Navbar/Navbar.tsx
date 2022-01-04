@@ -1,3 +1,6 @@
+import React, { useContext } from "react"
+import { Link } from "react-router-dom"
+import { ShoppingCartContext } from "../../context/ShoppingCartContext"
 import {
   AppBar,
   Box,
@@ -10,6 +13,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 // Add a logo or something
 
 const Navbar: React.FC = () => {
+  const { quantity } = useContext(ShoppingCartContext)
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -18,8 +23,10 @@ const Navbar: React.FC = () => {
             IndieStop
           </Typography>
           <IconButton>
-            <Badge>
-              <ShoppingCartIcon />
+            <Badge badgeContent={quantity}>
+              <Link to={"/cart"}>
+                <ShoppingCartIcon />
+              </Link>
             </Badge>
           </IconButton>
         </Toolbar>
