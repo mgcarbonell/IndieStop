@@ -5,7 +5,7 @@ import logger from "../utils/Logger"
 const getAllProducts = async (req: express.Request, res: express.Response) => {
   try {
     const products = await Product.find()
-    await res.json(products).status(200)
+    await res.json({ products: products }).status(200)
   } catch (err: any) {
     logger.error(err)
     res.sendStatus(500)
