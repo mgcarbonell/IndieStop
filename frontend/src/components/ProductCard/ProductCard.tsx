@@ -3,6 +3,7 @@ import { Card, CardContent, CardMedia, Typography } from "@mui/material"
 import { AddShoppingCart } from "@mui/icons-material"
 import { Button } from "@mui/material"
 import IProductCardProps from "../../interfaces/productProp.interface"
+import Cart from "../../models/cart"
 // { description, title, img_url, price, stock }
 
 const ProductCard: React.FC<IProductCardProps> = ({
@@ -15,7 +16,8 @@ const ProductCard: React.FC<IProductCardProps> = ({
   const prodId = { id }
   const addToCart = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("add to cart " + prodId.id)
+    console.log(prodId)
+    Cart.post(prodId)
   }
   return (
     <div>

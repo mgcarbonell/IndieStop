@@ -25,7 +25,7 @@ const getCart = async (req: express.Request, res: express.Response) => {
 }
 
 const postCart = async (req: express.Request, res: express.Response) => {
-  const prodId: number = parseInt(req.body.productId, 10)
+  const prodId: number = req.body.id
   try {
     await CartItem.find({
       relations: ["product_id"],
