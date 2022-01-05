@@ -8,9 +8,10 @@ export default class Products {
     return data
   }
 
-  static show = async (id: string): Promise<any> => {
+  static getById = async (id: any): Promise<any> => {
     const response = await fetch(`${Products.apiUrl}/product/${id}`)
     const data = await response.json()
+    // console.log("data => ", data)
     return data
   }
 

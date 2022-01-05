@@ -9,32 +9,41 @@ import Checkout from "./components/Checkout/Checkout"
 import { ShoppingCartContext } from "./context/ShoppingCartContext"
 // import IProductCardProps from "./interfaces/productProp.interface"
 
+const getLSItems = () => {
+  let d = window.localStorage.getItem("items")
+  return d
+}
+
 const App: React.FC = () => {
   const [products, setProducts] = useState<[]>([] as any)
   const { items, total, setItems, quantity, setQuantity, setTotal } =
     useContext(ShoppingCartContext)
 
   useEffect(() => {
-    // const toCart = {
-    //   description: "string",
-    //   title: "string",
-    //   price: 293874,
-    //   img_url: "string",
-    //   id: 0,
-    // }
-    // const array = [toCart]
-    // setItems(toCart)
-    // setTotal(total + toCart.price)
-    // setQuantity(+1)
+    if (items?.length === 0) {
+      // console.log("there is nothing in the cart")
+      let itemsFromStorage = getLSItems()?.split("")
+      // console.log(`itemsFromStorage`, itemsFromStorage)
+
+      if (itemsFromStorage !== null) {
+        itemsFromStorage?.forEach((i) => {
+          Products.getById(i).then((data) => {
+            setItems((items: any) => [...items, data.product])
+            setQuantity(itemsFromStorage!.length)
+            setTotal(total + data.product.price)
+          })
+        })
+      }
+    }
     Products.all().then((data: any) => {
       setProducts(data.products)
     })
   }, [])
 
   useEffect(() => {
-    console.log(`items => `, items)
-    console.log(`total => `, total)
-    console.log(`quantity => `, quantity)
+    // console.log(`items => `, items)
+    // console.log(`total => `, total)
+    // console.log(`quantity => `, quantity)
   }, [items])
   return (
     <div className="App">

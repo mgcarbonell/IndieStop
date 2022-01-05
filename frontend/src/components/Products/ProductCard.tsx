@@ -6,6 +6,11 @@ import { CartType } from "../../interfaces/cart.interface"
 import { ShoppingCartContext } from "../../context/ShoppingCartContext"
 // import Cart from "../../models/cart"
 
+const getLSItems = () => {
+  let d = window.localStorage.getItem("items")
+  return d
+}
+
 const ProductCard = ({
   title,
   description,
@@ -14,40 +19,23 @@ const ProductCard = ({
   id,
   products,
 }: IProductCardProps) => {
-  // const prodId = { id }
-
-  // const addToCart = (e: React.FormEvent) => {
-  //   e.preventDefault()
-  //   Cart.post(prodId)
-  // }
   const { items, total, setItems, quantity, setQuantity, setTotal } =
     useContext(ShoppingCartContext)
-  // let cart = localStorage.getItem("items") || "[{}]"
-  // cart = JSON.parse(cart)
 
   const addToCart = (e: React.FormEvent) => {
     e.preventDefault()
     const toCart = { description, title, price, img_url, id }
-    console.log(`items`, items)
-
     setItems((items: any) => [...items, toCart])
-    // setItems((items) => [...items, tocart])
-    // setItems((items) => [...items, toCart])
-    // setTotal(total + price * 100)
-    // setQuantity(cart.length - 1)
-    localStorage.setItem("items", JSON.stringify(items))
+    setTotal(total + price * 100)
+    setQuantity(quantity + 1)
+    let storage = window.localStorage.getItem("items")
+    console.log(`storage`, storage)
+    if (storage === null) {
+      window.localStorage.setItem("items", JSON.stringify(id))
+    } else {
+      window.localStorage.setItem("items", storage + JSON.stringify(id))
+    }
   }
-
-  // useEffect(() => {
-  //   // console.log("items => ", items)
-  // }, [items])
-
-  // useEffect(() => {
-  //   setQuantity(cart.length - 1)
-  //   return () => {
-  //     setQuantity(0)
-  //   }
-  // }, [items, cart, setQuantity])
 
   return (
     <div>

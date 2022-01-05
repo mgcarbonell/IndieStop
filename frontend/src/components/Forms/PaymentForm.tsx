@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import Payment from "../../models/payment"
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { Button } from "@mui/material"
@@ -7,6 +7,8 @@ import { ShoppingCartContext } from "../../context/ShoppingCartContext"
 const PaymentForm = () => {
   const elements = useElements()
   const stripe = useStripe()
+  const { total } = useContext(ShoppingCartContext)
+  const { items } = useContext(ShoppingCartContext)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -52,7 +54,7 @@ const PaymentForm = () => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="card-element">Card</label>
         <CardElement id="card-element" />
-        <Button>Pay</Button>
+        <button>Pay Now</button>
       </form>
     </>
   )

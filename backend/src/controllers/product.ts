@@ -17,7 +17,7 @@ const getProductById = async (req: express.Request, res: express.Response) => {
     const productId: number = parseInt(req.params.id, 10)
     await Product.findOne({ id: productId }).then((product) => {
       if (product) {
-        res.json(product).status(200)
+        res.json({ product: product }).status(200)
       } else {
         res.sendStatus(404)
       }
