@@ -3,9 +3,9 @@ import stripeController from "../../controllers/stripe"
 
 const router = express.Router()
 
-router.get("", stripeController.getPubKey)
-router.get("/config", stripeController.config)
-router.post("", stripeController.postToStripe)
 router.post("/create-payment-intent", stripeController.createPaymentIntent)
+router.get("/config", stripeController.config)
+router.get("", stripeController.getPubKey)
+router.post("", stripeController.postToStripe)
 
 export default router

@@ -17,10 +17,10 @@ const Cart = () => {
   })
   return (
     <div>
-      {clean?.map((item: any) => {
+      {clean?.map((item: any, index: number) => {
         if (onPage.indexOf(item.id) === -1) {
           onPage.push(item.id)
-          return <CartItem item={item} />
+          return <CartItem key={index} item={item} />
         } else {
           return null
         }

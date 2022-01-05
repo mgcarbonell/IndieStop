@@ -10,6 +10,7 @@ import {
   Badge,
 } from "@mui/material"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import { Home } from "@mui/icons-material"
 // Add a logo or something
 
 const Navbar: React.FC = () => {
@@ -19,6 +20,11 @@ const Navbar: React.FC = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <IconButton>
+            <Link to={"/"}>
+              <Home />
+            </Link>
+          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             IndieStop
           </Typography>

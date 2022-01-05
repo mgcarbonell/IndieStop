@@ -3,7 +3,7 @@ import { ShoppingCartContext } from "../../context/ShoppingCartContext"
 
 const CartItem = (item: any) => {
   const count: any = {}
-  const { items, total } = useContext(ShoppingCartContext)
+  const { items } = useContext(ShoppingCartContext)
   useEffect(() => {
     items?.forEach((item) => {
       if (!count[item.title]) count[item.title] = 1
@@ -16,7 +16,6 @@ const CartItem = (item: any) => {
       <img src={item.item.img_url} alt={`a ${item.item.title} onesie`} />
       <h1>{item.item.title}</h1>
       <p>{count[item.item.title]}</p>
-      <p>{total}</p>
     </div>
   )
 }

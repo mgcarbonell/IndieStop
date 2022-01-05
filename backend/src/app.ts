@@ -11,11 +11,7 @@ const app: Application = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(helmet({ contentSecurityPolicy: false }))
-app.use(
-  cors({
-    origin: "*" || (process.env.CLIENT_URL as string),
-  })
-)
+app.use(cors({ origin: "*" }))
 
 app.use(router)
 
