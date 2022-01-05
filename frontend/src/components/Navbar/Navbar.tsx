@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
             IndieStop
           </Typography>
           <IconButton>
-            <Badge badgeContent={quantity}>
+            <Badge badgeContent={quantity} color="secondary">
               <Link to={"/cart"}>
                 <ShoppingCartIcon />
               </Link>
