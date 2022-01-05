@@ -22,9 +22,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (items?.length === 0) {
-      // console.log("there is nothing in the cart")
       let itemsFromStorage = getLSItems()?.split("")
-      // console.log(`itemsFromStorage`, itemsFromStorage)
 
       if (itemsFromStorage !== null) {
         itemsFromStorage?.forEach((i) => {
