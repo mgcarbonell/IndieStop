@@ -9,11 +9,12 @@ const Success = () => {
   const [height, setHeight] = useState(0)
 
   const { setQuantity, setTotal, setItems } = useContext(ShoppingCartContext)
-
-  setQuantity(0)
-  setTotal(0)
-  setItems([])
-  localStorage.clear()
+  useEffect(() => {
+    setQuantity(0)
+    setTotal(0)
+    setItems([])
+    localStorage.clear()
+  }, [setQuantity, setTotal, setItems])
 
   useEffect(() => {
     setTimeout(() => {
