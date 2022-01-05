@@ -1,25 +1,16 @@
 import express from "express"
 import logger from "../utils/Logger"
 import Stripe from "stripe"
-import { IStripeKey } from "./interfaces"
+import dotrenv from "dotenv"
+import e from "express"
 
-class ApiKey implements IStripeKey {
-  public secret: string
-  public publishable: string
+dotrenv.config()
 
-  constructor(secret: string, publishable: string) {
-    this.secret = secret
-    this.publishable = publishable
-  }
-}
-
-const stripeKey = new ApiKey(
-  process.env.STRIPE_SECRET_KEY as string,
-  process.env.STRIPE_PUBLIC_KEY as string
-)
-
-const stripe = new Stripe(stripeKey.secret, {
+// const secret = process.env.STRIPE_SECRET! as string
+// const cleanForStripe = secret.replace(/['"]+/g, "")
+const stripe = new Stripe(process.env.STRIPE_SECRET! as string, {
   apiVersion: "2020-08-27",
+  typescript: true,
 })
 
 const charge = (token: string, amount: number) => {
@@ -54,7 +45,31 @@ const getPubKey = async (req: express.Request, res: express.Response) => {
   }
 }
 
+const createPaymentIntent = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  const { amount } = req.body
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: "usd",
+      payment_method_types: ["card"],
+    })
+    logger.info("Incoming request")
+    res.json({ clientSecret: paymentIntent.client_secret }).status(200)
+  } catch (err: any) {
+    res.status(400).json({ err: { message: err.message } })
+  }
+}
+
+const config = async (req: express.Request, res: express.Response) => {
+  res.json({ publishableKey: process.env.STRIPE_PUBLISHABLE })
+}
+
 export default module.exports = {
   postToStripe,
   getPubKey,
+  createPaymentIntent,
+  config,
 }

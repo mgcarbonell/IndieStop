@@ -16,7 +16,7 @@ const getLSItems = () => {
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<[]>([] as any)
-  const { items, total, setItems, quantity, setQuantity, setTotal } =
+  const { items, total, setItems, setQuantity, setTotal } =
     useContext(ShoppingCartContext)
 
   useEffect(() => {

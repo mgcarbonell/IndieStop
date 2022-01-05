@@ -32,11 +32,12 @@ const updateProdudctQty = async (
   req: express.Request,
   res: express.Response
 ) => {
+  const productId: number = parseInt(req.body.id, 10)
+  const numToDelete: number = parseInt(req.body.quantity, 10)
   try {
-    const produdctId: number = parseInt(req.params.id, 10)
-    await Product.findOne({ id: produdctId }).then((product) => {
+    await Product.findOne({ id: productId }).then((product) => {
       if (product) {
-        product.stock = product.stock - 1
+        product.stock = product.stock - numToDelete
         product.save()
         res.sendStatus(200)
       } else {
