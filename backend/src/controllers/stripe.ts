@@ -44,6 +44,17 @@ const postToStripe = async (req: express.Request, res: express.Response) => {
   }
 }
 
+const getPubKey = async (req: express.Request, res: express.Response) => {
+  try {
+    const publishableKey = process.env.STRIPE_PUBLIC_KEY
+    res.send(publishableKey).status(200)
+  } catch (err: any) {
+    logger.info(err)
+    res.status(500).json({ error: err.message })
+  }
+}
+
 export default module.exports = {
   postToStripe,
+  getPubKey,
 }

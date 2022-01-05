@@ -1,7 +1,7 @@
 import React from "react"
 import CheckoutForm from "../Forms/PaymentForm"
 
-const Checkout = () => {
+const Checkout: React.FC = () => {
   return (
     <div>
       <CheckoutForm />

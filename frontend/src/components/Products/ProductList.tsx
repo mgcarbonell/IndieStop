@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react"
-import Products from "../../models/products"
-import ProductCard from "./ProductCard/ProductCard"
+import ProductCard from "./ProductCard"
+// import IProductProps from "../../interfaces/productProp.interface"
 
-const ProductList: React.FC = () => {
-  const [products, setProducts] = useState([] as any[])
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
+const ProductList = ({ products }: any) => {
+  // const [products, setProducts] = useState([] as any[])
+  // const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
-  useEffect(() => {
-    Products.all()
-      .then((data) => {
-        setProducts(data.products)
-      })
-      .then(() => setIsLoaded(true))
-  }, [])
+  // useEffect(() => {
+  //   Products.all()
+  //     .then((data: any) => {
+  //       setProducts(data.products)
+  //     })
+  //     .then(() => setIsLoaded(true))
+  // }, [])
   return (
     <div>
-      {isLoaded ? (
+      {products.length > 0 ? (
         products.map((product: any, index: number) => (
           <ProductCard
+            products={products}
             key={index}
             id={product.id}
             title={product.title}
@@ -25,6 +26,7 @@ const ProductList: React.FC = () => {
             img_url={product.img_url}
             price={product.price / 100}
           />
+          // <></>
         ))
       ) : (
         <div>Loading...</div>

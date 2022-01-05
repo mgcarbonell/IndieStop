@@ -1,7 +1,7 @@
 export default class Payment {
   public static apiUrl = process.env.REACT_APP_SERVER_URL as string
   static post = async (data: any): Promise<any> => {
-    const response = await fetch(`${Payment.apiUrl}/payment`, {
+    const response = await fetch(`${Payment.apiUrl}/stripe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,6 +10,11 @@ export default class Payment {
     })
     const json = await response.json()
     return json
+  }
+  static get = async () => {
+    const response = await fetch(`${Payment.apiUrl}/stripe`)
+    const data = await response.json()
+    return data
   }
 }
 // import ApiCall from "./apicall"
