@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react"
-import Payment from "../../models/payment"
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { Button } from "@mui/material"
 import { ShoppingCartContext } from "../../context/ShoppingCartContext"
 
 const PaymentForm = () => {
+  const [isProcessing, setProcessingTo] = useState<boolean>(false)
+  const [checkoutError, setCheckoutError] = useState()
+
   const { total } = useContext(ShoppingCartContext)
 
   const elements = useElements()
@@ -12,10 +14,12 @@ const PaymentForm = () => {
 
   const handleFormSubmit = async (e: any) => {
     e.preventDefault()
-    console.log("CLICK")
     if (!stripe || !elements) {
       return
     }
+
+    const cardElement = elements.getElement(CardElement)!
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/stripe/create-payment-intent`,
@@ -29,10 +33,25 @@ const PaymentForm = () => {
           }),
         }
       )
-      const data = await response.json()
-      console.log(data)
+
+      const clientSecret: any = await response.json()
+
+      console.log(`clientSecret =>`, clientSecret)
+
+      const paymentMethodReq: any = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+      })
+
+      const confirmCardPayment: any = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: paymentMethodReq.paymentMethod.id!,
+        }
+      )
+      console.log(confirmCardPayment)
     } catch (err: any) {
-      console.log(err)
+      setCheckoutError(err.message)
     }
   }
   // const amount = total
@@ -66,10 +85,6 @@ const PaymentForm = () => {
   //     return <div>{stripeError}</div>
   //   }
   // }
-
-  const handleNameChange = async (event: any) => {
-    setName(event.target.value)
-  }
 
   return (
     <>

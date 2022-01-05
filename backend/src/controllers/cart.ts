@@ -11,6 +11,12 @@ import logger from "../utils/Logger"
  * create a user, tie the user to the cart, and cart_item
  */
 
+const createCart = async (req: express.Request, res: express.Response) => {
+  const newCart = await Cart.create()
+  newCart.save()
+  return newCart
+}
+
 const getCart = async (req: express.Request, res: express.Response) => {
   const product: any[] = []
   try {
@@ -84,4 +90,5 @@ export default module.exports = {
   getCart,
   postCart,
   deleteCart,
+  createCart,
 }

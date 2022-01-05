@@ -50,14 +50,12 @@ const createPaymentIntent = async (
   res: express.Response
 ) => {
   const amount = req.body.amount
-  console.log(amount)
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: "usd",
       payment_method_types: ["card"],
     })
-    logger.info(paymentIntent)
     res.json({ clientSecret: paymentIntent.client_secret }).status(200)
   } catch (err: any) {
     console.log(err)
