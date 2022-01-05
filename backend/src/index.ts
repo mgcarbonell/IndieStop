@@ -1,16 +1,26 @@
 import dotenv from "dotenv"
-import express, { Application, Request, Response } from "express"
-import cors from "cors"
-import helmet from "helmet"
+import { app } from "./app"
+import "reflect-metadata"
+import { Connection, createConnection } from "typeorm"
+import ORMConfig from "../ormconfig"
 import logger from "./utils/Logger"
-
 dotenv.config()
 
-const app: Application = express()
+const PORT: number = parseInt(process.env.PORT as string, 10) || 4000
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cors())
-app.use(helmet({ contentSecurityPolicy: false }))
+const server = app.listen(PORT, () => {
+  logger.info(`Server listening on port ${PORT}`)
+})
 
-app.get("/api/v1/health")
+const connectToORM = async () => {
+  try {
+    let connection: Connection
+    connection = await createConnection(ORMConfig)
+    logger.info(`Connected to Database`)
+    await connection.runMigrations()
+    await logger.info(`Database Migrations ran`)
+  } catch (err: any) {
+    logger.error(err)
+  }
+}
+connectToORM()
