@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar"
 import ProductList from "./components/Products/ProductList"
 import Cart from "./components/Cart/Cart"
 import Checkout from "./components/Checkout/Checkout"
+import Success from "./components/Success/Success"
 import { ShoppingCartContext } from "./context/ShoppingCartContext"
 // import IProductCardProps from "./interfaces/productProp.interface"
 
@@ -52,6 +53,7 @@ const App: React.FC = () => {
         <Route path="/" element={<ProductList products={products} />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/success" element={<Success />} />
       </Routes>
     </div>
   )

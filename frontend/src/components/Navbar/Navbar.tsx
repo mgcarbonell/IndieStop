@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className="navbar--base">
         <Toolbar>
           <IconButton>
             <Link to={"/"}>
