@@ -15,3 +15,13 @@ In order to install and run this on your current machine, please ensure the foll
 7. In a new terminal `cd` to the frontend and repeat steps 4-6.
 
 ## IndieStop uses an MVC Pattern & Stripe Integration for Payment Processing.
+
+## MUI Components:
+
+- [x] Button
+- [x] Paper
+- [x] Typography
+- [x] Appbar
+- [x] Card
+
+##
