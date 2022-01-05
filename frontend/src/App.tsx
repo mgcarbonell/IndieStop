@@ -11,18 +11,21 @@ import { ShoppingCartContext } from "./context/ShoppingCartContext"
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<[]>([] as any)
-  const { items, total, setItems, setQuantity, setTotal } =
+  const { items, total, setItems, quantity, setQuantity, setTotal } =
     useContext(ShoppingCartContext)
+
   useEffect(() => {
-    const toCart = {
-      description: "string",
-      title: "string",
-      price: 293874,
-      img_url: "string",
-      id: 0,
-    }
-    const array = [toCart]
-    setItems(array)
+    // const toCart = {
+    //   description: "string",
+    //   title: "string",
+    //   price: 293874,
+    //   img_url: "string",
+    //   id: 0,
+    // }
+    // const array = [toCart]
+    // setItems(toCart)
+    // setTotal(total + toCart.price)
+    // setQuantity(+1)
     Products.all().then((data: any) => {
       setProducts(data.products)
     })
@@ -30,6 +33,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     console.log(`items => `, items)
+    console.log(`total => `, total)
+    console.log(`quantity => `, quantity)
   }, [items])
   return (
     <div className="App">

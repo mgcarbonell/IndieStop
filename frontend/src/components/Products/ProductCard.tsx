@@ -20,22 +20,23 @@ const ProductCard = ({
   //   e.preventDefault()
   //   Cart.post(prodId)
   // }
-
+  const { items, total, setItems, quantity, setQuantity, setTotal } =
+    useContext(ShoppingCartContext)
   // let cart = localStorage.getItem("items") || "[{}]"
   // cart = JSON.parse(cart)
 
-  // const addToCart = (e: React.FormEvent) => {
-  //   e.preventDefault()
-  //   const toCart = { description, title, price, img_url, id }
-  //   console.log(`items`, items)
-  //   console.log(`toCart`, toCart)
-  // setItems([...items, tocart])
-  // setItems((items) => [...items, tocart])
-  // setItems((items) => [...items, toCart])
-  // setTotal(total + price * 100)
-  // setQuantity(cart.length - 1)
-  // localStorage.setItem("items", JSON.stringify(items))
-  // }
+  const addToCart = (e: React.FormEvent) => {
+    e.preventDefault()
+    const toCart = { description, title, price, img_url, id }
+    console.log(`items`, items)
+
+    setItems((items: any) => [...items, toCart])
+    // setItems((items) => [...items, tocart])
+    // setItems((items) => [...items, toCart])
+    // setTotal(total + price * 100)
+    // setQuantity(cart.length - 1)
+    localStorage.setItem("items", JSON.stringify(items))
+  }
 
   // useEffect(() => {
   //   // console.log("items => ", items)
@@ -64,11 +65,7 @@ const ProductCard = ({
           <Typography variant="h6" component="h2">
             ${price}
           </Typography>
-          <Fab
-            color="primary"
-            aria-label="add to cart"
-            onClick={() => console.log("CLICK")}
-          >
+          <Fab color="primary" aria-label="add to cart" onClick={addToCart}>
             <AddShoppingCart />
           </Fab>
         </CardContent>
