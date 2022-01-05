@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import Payment from "../../models/payment"
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { Button } from "@mui/material"
@@ -9,6 +9,9 @@ const PaymentForm = () => {
   const stripe = useStripe()
   const { total } = useContext(ShoppingCartContext)
   const { items } = useContext(ShoppingCartContext)
+  const [name, setName] = useState<string>("")
+  const [disabled, setDisabled] = useState(true)
+  const [success, setSuccess] = useState<boolean>(false)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -21,7 +24,8 @@ const PaymentForm = () => {
     const { error: backError, clientSecret } = await Payment.post({
       paymentMethodType: "card",
       currency: "usd",
-      // amount,
+      amount: { total },
+      name: { name },
     })
 
     if (backError) {
@@ -48,13 +52,26 @@ const PaymentForm = () => {
       }
     }
   }
+
+  const handleNameChange = async (event: any) => {
+    setName(event.target.value)
+  }
+
   return (
     <>
-      <h1>Payment Form</h1>
+      <h1>Check Out</h1>
       <form onSubmit={handleSubmit}>
+        <label>Cardholder Name</label>
+        <input
+          placeholder={"Please enter the Cardholder name."}
+          type={"text"}
+          id={"name"}
+          value={name}
+          onChange={handleNameChange}
+        />
         <label htmlFor="card-element">Card</label>
         <CardElement id="card-element" />
-        <button>Pay Now</button>
+        <Button>Pay Now</Button>
       </form>
     </>
   )

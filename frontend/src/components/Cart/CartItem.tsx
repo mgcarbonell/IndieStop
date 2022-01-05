@@ -9,7 +9,7 @@ const CartItem = (item: any) => {
       if (!count[item.title]) count[item.title] = 1
       else ++count[item.title]
     })
-    console.log(`count from use effect `, count)
+    // console.log(`count from use effect `, count)
   }, [])
   return (
     <div key={"key" + item.item.id}>

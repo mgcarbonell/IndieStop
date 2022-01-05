@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react"
 import { Card, CardContent, CardMedia, Fab, Typography } from "@mui/material"
 import { AddShoppingCart } from "@mui/icons-material"
 import IProductCardProps from "../../interfaces/productProp.interface"
-import { CartType } from "../../interfaces/cart.interface"
 import { ShoppingCartContext } from "../../context/ShoppingCartContext"
 // import Cart from "../../models/cart"
 
@@ -29,7 +28,6 @@ const ProductCard = ({
     setTotal(total + price * 100)
     setQuantity(quantity + 1)
     let storage = window.localStorage.getItem("items")
-    console.log(`storage`, storage)
     if (storage === null) {
       window.localStorage.setItem("items", JSON.stringify(id))
     } else {
