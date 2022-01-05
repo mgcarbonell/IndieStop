@@ -13,44 +13,50 @@ const PaymentForm = () => {
   const [disabled, setDisabled] = useState(true)
   const [success, setSuccess] = useState<boolean>(false)
 
-  const handleSubmit = async (e: any) => {
+  const handleFormSubmit = async (e: any) => {
     e.preventDefault()
+    console.log("CLICK")
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return
     }
-    // const amount = total
-    const { error: backError, clientSecret } = await Payment.post({
-      paymentMethodType: "card",
-      currency: "usd",
-      amount: { total },
-      name: { name },
+
+    const { data: clientSecret }: any = await Payment.createPaymentIntent({
+      total,
     })
+    console.log(clientSecret)
+    // const amount = total
+    // const { error: backError, clientSecret } = await Payment.post({
+    //   paymentMethodType: "card",
+    //   currency: "usd",
+    //   amount: { total },
+    //   name: { name },
+    // })
 
-    if (backError) {
-      console.log(backError)
-      return
-    }
+    // if (backError) {
+    //   console.log(backError)
+    //   return
+    // }
 
-    const cardElement = elements.getElement(CardElement)
-    if (cardElement) {
-      const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: cardElement,
-            billing_details: {
-              name: e.target.name.value,
-            },
-          },
-        })
-      if (paymentIntent) {
-        console.log("Payment Successful")
-      }
-      if (stripeError) {
-        return <div>{stripeError}</div>
-      }
-    }
+    // const cardElement = elements.getElement(CardElement)
+    // if (cardElement) {
+    //   const { error: stripeError, paymentIntent } =
+    //     await stripe.confirmCardPayment(clientSecret, {
+    //       payment_method: {
+    //         card: cardElement,
+    //         billing_details: {
+    //           name: e.target.name.value,
+    //         },
+    //       },
+    //     })
+    //   if (paymentIntent) {
+    //     console.log("Payment Successful")
+    //   }
+    //   if (stripeError) {
+    //     return <div>{stripeError}</div>
+    //   }
+    // }
   }
 
   const handleNameChange = async (event: any) => {
@@ -60,7 +66,7 @@ const PaymentForm = () => {
   return (
     <>
       <h1>Check Out</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <label>Cardholder Name</label>
         <input
           placeholder={"Please enter the Cardholder name."}
@@ -71,7 +77,7 @@ const PaymentForm = () => {
         />
         <label htmlFor="card-element">Card</label>
         <CardElement id="card-element" />
-        <Button>Pay Now</Button>
+        <Button type="submit">Pay Now</Button>
       </form>
     </>
   )

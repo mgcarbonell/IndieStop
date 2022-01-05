@@ -59,7 +59,7 @@ const createPaymentIntent = async (
     logger.info("Incoming request")
     res.json({ clientSecret: paymentIntent.client_secret }).status(200)
   } catch (err: any) {
-    res.status(400).json({ err: { message: err.message } })
+    res.status(500).json({ err: { message: err.message } })
   }
 }
 
